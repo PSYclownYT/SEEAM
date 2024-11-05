@@ -1,0 +1,9 @@
+
+        panda3d==1.10.14
+        Pillow==11.0.0
+        pygame==2.5.2
+        pywin32==308
+        Requests==2.32.3
+        ursina==7.0.0
+        webview==0.1.5
+        winshell==0.6
