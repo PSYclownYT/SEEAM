@@ -1,7 +1,8 @@
-# SEEAM - The Awful Steam Remake
+![SeeamLogo](https://github.com/user-attachments/assets/66d79bfb-fc96-43fd-be68-1ea81479f3d7)
+# SEEAM - The Peak Steam Remake why is the logo so big help
 
 Welcome to **SEEAM** – your one-stop (and stop often) destination for all things *mediocrely* gaming! Why buy a smooth, polished game management and store app when you can experience all the bugs, glitches, and terrible UI of a *very amazing remake of Steam*?
-
+https://github.com/PSYclownYT/SEEAM/wiki/Development
 ## Features
 
 ### 👾 Half-Working Game Library
