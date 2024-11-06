@@ -1,5 +1,4 @@
 Pillow==9.5.0
-Pillow==11.0.0
 pygame==2.5.2
 Requests==2.32.3
 tkhtmlview==0.3.1

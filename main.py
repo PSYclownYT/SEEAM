@@ -25,7 +25,7 @@ BUTTON_FONT = ("Helvetica", 14)
 LABEL_FONT = ("Helvetica", 12)
 
 # Path to InstallGame.py
-install_game_script = Path("InstallGame.py")
+install_game_script = Path("ServerInstall.py")
 
 def run_script(script_name):
     """Run a Python script located at script_name."""

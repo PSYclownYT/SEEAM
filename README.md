@@ -8,7 +8,7 @@ https://github.com/PSYclownYT/SEEAM/wiki/Development
 ### 👾 Half-Working Game Library
 Your entire game collection in one (mostly unorganized) place! With SEEAM, you can:
 - **Attempt to add games** (no promises on them actually showing up!)
-- **NO way to find games** you expect WAY too much of me
+- **SOME SEMI-FUNCTIONAL way to find games** you expect WAY too much of me
 
 # NO SUS VISUAL NOVELS
 

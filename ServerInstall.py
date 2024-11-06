@@ -113,6 +113,10 @@ def download_app(url):
     with zipfile.ZipFile(io.BytesIO(response.content)) as zip_file:
         os.makedirs(path, exist_ok=True)
         zip_file.extractall(path)
+        with open(path + """\\requirements.txt""", 'r') as reqs:
+            prqs = reqs.read
+            os.system('pip install -r' + prqs)
+
 
 if __name__ == "__main__":
     sheet_url = "https://docs.google.com/spreadsheets/d/1J7uSpw6uCX2e094dMKMh1j3EFYPU4yeKCHWjcIzNMkE/edit?gid=0#gid=0"
