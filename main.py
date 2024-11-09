@@ -13,7 +13,6 @@ else:
     name = "User"
 
 # Setting up app assets directory
-assets_path = Path("GameDetails/")
 logo_path = Path("assets/SeeamLogo.png")
 
 # Define primary color scheme

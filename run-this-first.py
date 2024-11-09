@@ -6,16 +6,6 @@ try:
     os.mkdir('SeeamApps')
 except:
     print('one of the dirs already exists!')
-print('You might need to restart this file to continue!')
-import requests
-def getonlinefile(url, path):
-    req = requests.get(url)
-    with open(path, 'wb') as f:
-        f.write(req.content)
-getonlinefile('https://codeberg.org/psyclown/SEEAM/raw/branch/main/assets/SeeamLogo.png','assets/SeeamLogo.png')
-getonlinefile('https://raw.githubusercontent.com/PSYclownYT/OpenWithSEEAM/refs/heads/main/main.py', 'main.py')
-getonlinefile('https://raw.githubusercontent.com/PSYclownYT/OpenWithSEEAM/refs/heads/main/InstallGame.py','InstallGame.py')
-
 import tkinter as tk
 
 from tkinter import simpledialog
