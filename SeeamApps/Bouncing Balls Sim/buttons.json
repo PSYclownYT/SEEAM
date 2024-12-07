@@ -1,0 +1,17 @@
+{
+    "1": {
+        "Color": "Black",
+        "Text": "Extras",
+        "File": "extra.py"
+    },
+    "2": {
+        "Color": "Blue",
+        "Text": "Play",
+        "File": "main.py"
+    },
+    "3": {
+        "Color": "Green",
+        "Text": "Settings",
+        "File": "settings.py"
+    }
+}

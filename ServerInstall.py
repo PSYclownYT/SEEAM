@@ -17,7 +17,7 @@ LABEL_FONT = ("Helvetica", 12)
 
 def fetch_data(sheet_url):
     sheet_id = sheet_url.split('/d/')[1].split('/')[0]
-    export_url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv'
+    export_url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet=Sheet1'
     data = pd.read_csv(export_url)
     return data
 
