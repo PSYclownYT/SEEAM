@@ -41,7 +41,7 @@ def create_app(data):
 
     def apply_filter():
         tag = tag_var.get().lower()
-        filtered_data = data[data['Enter the Name of your program'].str.lower().str.contains(tag, na=False)]
+        filtered_data = data[data['Name'].str.lower().str.contains(tag, na=False)]
         update_programs(filtered_data)
 
     filter_button = tk.Button(filter_frame, text="Search", command=apply_filter, bg=BTN_COLOR, fg=TEXT_COLOR, font=BUTTON_FONT)
@@ -64,19 +64,36 @@ def create_app(data):
             program_frame = tk.Frame(app_frame, bg=BG_COLOR)
             program_frame.pack(pady=5, padx=10, fill=tk.X)
 
-            app_name = tk.Label(program_frame, text=row['Enter the Name of your program'], font=LABEL_FONT, bg=BG_COLOR, fg=TEXT_COLOR)
+            app_name = tk.Label(program_frame, text=row['Name'], font=LABEL_FONT, bg=BG_COLOR, fg=TEXT_COLOR)
             app_name.pack(side=tk.LEFT, padx=10)
 
-            tiurl = row['Thumbnail image URL']
-            img_data = Image.open(requests.get(tiurl, stream=True).raw)
-            img_data = img_data.resize((100, 50))
-            thumbnail = ImageTk.PhotoImage(img_data)
-            thumbnail_label = tk.Label(program_frame, image=thumbnail, bg=BG_COLOR)
-            thumbnail_label.image = thumbnail
-            thumbnail_label.pack(side=tk.LEFT)
+            # Validate and load the thumbnail
+            tiurl = row.get('Thumbnail', None)
+            if pd.notnull(tiurl):
+                try:
+                    img_data = Image.open(requests.get(tiurl, stream=True).raw)
+                    img_data = img_data.resize((100, 50))
+                    thumbnail = ImageTk.PhotoImage(img_data)
+                    thumbnail_label = tk.Label(program_frame, image=thumbnail, bg=BG_COLOR)
+                    thumbnail_label.image = thumbnail
+                    thumbnail_label.pack(side=tk.LEFT)
+                except Exception as e:
+                    print(f"Error loading thumbnail: {e}")
+                    thumbnail_label = tk.Label(program_frame, text="No Image", font=LABEL_FONT, bg=BG_COLOR, fg=TEXT_COLOR)
+                    thumbnail_label.pack(side=tk.LEFT)
+            else:
+                thumbnail_label = tk.Label(program_frame, text="No Image", font=LABEL_FONT, bg=BG_COLOR, fg=TEXT_COLOR)
+                thumbnail_label.pack(side=tk.LEFT)
 
-            download_button = tk.Button(program_frame, text="Download", command=lambda url=row['The Link to update your program']: download_app(url), bg=BTN_COLOR, fg=TEXT_COLOR, font=BUTTON_FONT)
-            download_button.pack(side=tk.LEFT, padx=10)
+            # Validate and add download button
+            link = row.get('Link', None)
+            if pd.notnull(link):
+                download_button = tk.Button(program_frame, text="Download", command=lambda url=link: download_app(url), bg=BTN_COLOR, fg=TEXT_COLOR, font=BUTTON_FONT)
+                download_button.pack(side=tk.LEFT, padx=10)
+            else:
+                download_button = tk.Label(program_frame, text="No Link", font=LABEL_FONT, bg=BG_COLOR, fg=TEXT_COLOR)
+                download_button.pack(side=tk.LEFT)
+
 
         update_pagination(len(filtered_data))
 
@@ -103,19 +120,28 @@ def create_app(data):
     root.mainloop()
 
 def download_app(url):
-    parsed_url = urlparse(url)
-    filename = os.path.basename(parsed_url.path).replace('%20', ' ').rstrip('.zip')
-    path = os.path.join('SeeamApps', filename)
+    if not url or not urlparse(url).scheme:
+        messagebox.showerror("Invalid URL", "The provided download URL is invalid.")
+        return
 
-    response = requests.get(url, stream=True)
-    response.raise_for_status()
+    try:
+        parsed_url = urlparse(url)
+        filename = os.path.basename(parsed_url.path).replace('%20', ' ').rstrip('.zip')
+        path = os.path.join('SeeamApps', filename)
 
-    with zipfile.ZipFile(io.BytesIO(response.content)) as zip_file:
-        os.makedirs(path, exist_ok=True)
-        zip_file.extractall(path)
-        with open(path + """\\requirements.txt""", 'r') as reqs:
-            prqs = reqs.read
-            os.system('pip install -r' + prqs)
+        response = requests.get(url, stream=True)
+        response.raise_for_status()
+
+        with zipfile.ZipFile(io.BytesIO(response.content)) as zip_file:
+            os.makedirs(path, exist_ok=True)
+            zip_file.extractall(path)
+            reqs_path = os.path.join(path, "requirements.txt")
+            if os.path.exists(reqs_path):
+                os.system(f'pip install -r {reqs_path}')
+            messagebox.showinfo("Download Complete", f"App downloaded and extracted to {path}")
+    except Exception as e:
+        messagebox.showerror("Download Error", f"An error occurred while downloading: {e}")
+
 
 
 if __name__ == "__main__":

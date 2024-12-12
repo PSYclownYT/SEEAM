@@ -6,12 +6,12 @@
     },
     "2": {
         "Color": "Blue",
-        "Text": "Play",
-        "File": "main.py"
+        "Text": "Get Freaky",
+        "File": "freaky.py"
     },
     "3": {
         "Color": "Green",
         "Text": "Settings",
-        "File": "settings.py"
+        "File": "set.py"
     }
 }
