@@ -4,6 +4,7 @@ from PIL import ImageGrab, Image
 from keyboard import on_release
 from threading import Thread
 from settings import *
+import moviepy.video.io.ImageSequenceClip
 
 
 def next_folder_number() -> None:
@@ -62,6 +63,14 @@ class ClipMaker:
             image.save(os.path.join(CLIP_SAVING_PATH + folder_name, f"image{i}.png"))
         self.next_folder_number += 1
         print('clip saved')
+        image_folder=CLIP_SAVING_PATH + folder_name
+        fps=20
+        image_files = [os.path.join(image_folder,img)
+            for img in os.listdir(image_folder)
+                if img.endswith(".png")]
+        clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
+        clip.write_videofile('my_video.mp4')
+
         return
 
     def on_key(self, key) -> None:
