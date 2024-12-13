@@ -1,4 +1,5 @@
 import os
+import shutil
 from time import sleep
 from PIL import ImageGrab, Image
 from keyboard import on_release
@@ -69,8 +70,8 @@ class ClipMaker:
             for img in os.listdir(image_folder)
                 if img.endswith(".png")]
         clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-        clip.write_videofile('my_video.mp4')
-
+        clip.write_videofile(CLIP_SAVING_PATH + 'my_video.mp4')
+        shutil.rmtree(CLIP_SAVING_PATH + folder_name)
         return
 
     def on_key(self, key) -> None:
